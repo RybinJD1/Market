@@ -70,7 +70,7 @@ public class ProductServlet extends HttpServlet{
         product.setRemainder(remainder);
         String id = req.getParameter("id");
         if(id == null || id.isEmpty() ) {
-            productDatabaseDao.add(product);
+            productDatabaseDao.insert(product);
         }
         else {
             product.setId(Long.parseLong(id));

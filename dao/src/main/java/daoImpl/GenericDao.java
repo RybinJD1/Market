@@ -3,15 +3,13 @@ package daoImpl;
 import entities.Entity;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Collection;
 
 
 public interface GenericDao<T extends Entity> {
     Connection connection = null;
 
-    void add(T entity);
+    void insert(T entity);
 
     void update(T entity);
 
@@ -27,9 +25,6 @@ public interface GenericDao<T extends Entity> {
             e.printStackTrace();
         }*/
     }
-
-
-//    void deleteAll();
 
     Collection getAll();
 

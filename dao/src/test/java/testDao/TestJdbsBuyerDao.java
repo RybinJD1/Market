@@ -36,7 +36,7 @@ public class TestJdbsBuyerDao {
     /*@Test
     public void testAddedBuyer() throws SQLException {
 
-        buyerDatabaseDao.add(new Buyer("Ivan", "Doroshko", "i.doroshko@gmail.com", "12345", "2561524", "Minsk, Kulman 7, 2"));
+        buyerDatabaseDao.insert(new Buyer("Ivan", "Doroshko", "i.doroshko@gmail.com", "12345", "2561524", "Minsk, Kulman 7, 2"));
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM buyers");
         resultSet.next();

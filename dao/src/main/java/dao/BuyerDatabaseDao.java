@@ -3,6 +3,7 @@ package dao;
 import connectionDB.ConnectionHCP;
 import daoImpl.BuyerDao;
 import entities.Buyer;
+
 import java.sql.*;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -18,16 +19,14 @@ public class BuyerDatabaseDao implements BuyerDao {
     private static final String SQL_DELETE_ALL_BUYERS_QUERY = "TRUNCATE TABLE buyers";
     private static final String SQL_SELECT_ALL_BUYERS_QUERY = "SELECT * FROM buyers";
 
-    Connection connection ;
+    Connection connection;
 
     public BuyerDatabaseDao() {
         this.connection = ConnectionHCP.getConnection();
     }
 
-
-
     @Override
-    public void add(Buyer buyer) {
+    public void insert(Buyer buyer) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_BUYER_QUERY);
             preparedStatement.setString(1, buyer.getName());
@@ -79,7 +78,7 @@ public class BuyerDatabaseDao implements BuyerDao {
     }
 
     @Override
-    public Buyer find(String email, String password) { //работает
+    public Buyer find(String email, String password) {
         String LOGIN_QUERY = "select * from buyers where email=" + "'" + email + "'" + " and password=" + "'" + password + "'";
         Buyer result = null;
         try {
@@ -106,18 +105,6 @@ public class BuyerDatabaseDao implements BuyerDao {
             e.printStackTrace();
         }
     }
-
-    /*@Override
-    public void deleteAll() {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ALL_BUYERS_QUERY);
-            preparedStatement.execute();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }*/
 
     @Override
     public Collection getAll() {

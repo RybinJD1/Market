@@ -13,7 +13,7 @@ public class TestJdbsOrdersDao {
 
    /* @Test
     public void addOrders() throws SQLException {
-//        ordersDatabaseDao.add(new Orders(8, LocalDate.of(2016, 10, 5), LocalDate.of(2016, 10, 9),Status.CANCELLED, 5):
+//        ordersDatabaseDao.insert(new Orders(8, LocalDate.of(2016, 10, 5), LocalDate.of(2016, 10, 9),Status.CANCELLED, 5):
 //        Statement statement = connection.createStatement();
 //        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM orders");
 //        resultSet.next();

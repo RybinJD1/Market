@@ -68,7 +68,7 @@ public class OrderServlet extends HttpServlet {
         Status.valueOf(resultSet.getString("Status").toUpperCase())*/
         String id = req.getParameter("id");
         if(id == null || id.isEmpty() ) {
-            ordersDatabaseDao.add(orders);
+            ordersDatabaseDao.insert(orders);
         }
         else {
             orders.setId(Long.parseLong(id));

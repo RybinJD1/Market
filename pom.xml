@@ -17,8 +17,6 @@
     </modules>
 
 
-
-
     <properties>
         <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
     </properties>

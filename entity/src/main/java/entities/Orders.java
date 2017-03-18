@@ -9,11 +9,12 @@ import java.util.Map;
 
 public class Orders extends Entity{
 
+
+    private long buyerId;
     private Status status;
     private LocalDate registrationDate;
     private LocalDate closingDate;
     private Map<Product, Integer> quantityOfProduct = new HashMap<>();
-    private long buyerId;
 
     public Orders() {}
 

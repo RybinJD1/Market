@@ -26,14 +26,14 @@ public class ProductDatabaseDao implements ProductDao {
     private static final String SQL_DELETE_ALL_PRODUCTS_QUERY = "TRUNCATE TABLE products";
     private static final String SQL_SELECT_ALL_PRODUCT_QUERY = "SELECT * FROM products";
 
-    Connection connection ;
+    Connection connection;
 
     public ProductDatabaseDao() {
-        this.connection= ConnectionHCP.getConnection();
+        this.connection = ConnectionHCP.getConnection();
     }
 
     @Override
-    public void add(Product product) {
+    public void insert(Product product) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_PRODUCT_QUERY);
             preparedStatement.setString(1, product.getName());
@@ -92,17 +92,6 @@ public class ProductDatabaseDao implements ProductDao {
             e.printStackTrace();
         }
     }
-
-    /*@Override
-    public void deleteAll() {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ALL_PRODUCTS_QUERY);
-            preparedStatement.execute();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     @Override
     public Collection getAll() {

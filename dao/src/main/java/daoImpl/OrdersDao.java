@@ -14,4 +14,6 @@ public interface OrdersDao extends GenericDao<Orders> {
     Collection getOrdersByProductName();
 
     void deleteOrdersByRegistrationDate();
+
+    long getIdOfLastOrder();
 }

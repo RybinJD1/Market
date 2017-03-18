@@ -69,7 +69,7 @@ public class UserServlet extends HttpServlet {
         buyer.setAddress(req.getParameter("address"));
         String id = req.getParameter("id");
         if(id == null || id.isEmpty() ) {
-            buyerDatabaseDao.add(buyer);
+            buyerDatabaseDao.insert(buyer);
         }
         else {
             buyer.setId(Long.parseLong(id));
