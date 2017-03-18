@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 public class ConnectionHCP {
 
+
     private static HikariDataSource dataSource;
     private static HikariConfig config = new HikariConfig();
 
@@ -26,8 +27,14 @@ public class ConnectionHCP {
         dataSource = new HikariDataSource(config);
     }
 
-    public static Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+    public static Connection getConnection() {
+        try {
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
 
 }

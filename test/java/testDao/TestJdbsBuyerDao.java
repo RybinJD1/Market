@@ -1,16 +1,16 @@
 package testDao;
 
 
+import dao.BuyerDatabaseDao;
+
 public class TestJdbsBuyerDao {
 
-    /*private static final String CREATE_BUYERS_TABLE_QUERY = "CREATE TABLE buyers(id int auto_increment, name varchar(60)" +
-            " not null, surname varchar(60) not null, email varchar(60) unique not null, password varchar(60) not null," +
-            " phone varchar(60) not null, address varchar(60) not null, primary key(id))";
+
     private BuyerDatabaseDao buyerDatabaseDao = new BuyerDatabaseDao();
 
 
 
-    private Connection connection;*/
+
 
 //    @Test
 //    public void initDb() {

@@ -3,11 +3,7 @@ package dao;
 import connectionDB.ConnectionHCP;
 import daoImpl.BuyerDao;
 import entities.Buyer;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,10 +18,17 @@ public class BuyerDatabaseDao implements BuyerDao {
     private static final String SQL_DELETE_ALL_BUYERS_QUERY = "TRUNCATE TABLE buyers";
     private static final String SQL_SELECT_ALL_BUYERS_QUERY = "SELECT * FROM buyers";
 
+    Connection connection ;
+
+    public BuyerDatabaseDao() {
+        this.connection = ConnectionHCP.getConnection();
+    }
+
+
+
     @Override
     public void add(Buyer buyer) {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_BUYER_QUERY);
             preparedStatement.setString(1, buyer.getName());
             preparedStatement.setString(2, buyer.getSurname());
@@ -43,7 +46,6 @@ public class BuyerDatabaseDao implements BuyerDao {
     @Override
     public void update(Buyer buyer) {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_BUYER_QUERY);
             preparedStatement.setLong(7, buyer.getId());
             preparedStatement.setString(1, buyer.getName());
@@ -63,7 +65,6 @@ public class BuyerDatabaseDao implements BuyerDao {
     public Buyer getById(long id) {
         Buyer result = null;
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BY_ID_BUYER_QUERY);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -78,11 +79,10 @@ public class BuyerDatabaseDao implements BuyerDao {
     }
 
     @Override
-    public Buyer find(String email, String password) {
+    public Buyer find(String email, String password) { //работает
         String LOGIN_QUERY = "select * from buyers where email=" + "'" + email + "'" + " and password=" + "'" + password + "'";
         Buyer result = null;
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement ps = connection.prepareStatement(LOGIN_QUERY);
             ResultSet resultSet = ps.executeQuery();
             if (resultSet != null && resultSet.next()) {
@@ -98,7 +98,6 @@ public class BuyerDatabaseDao implements BuyerDao {
     @Override
     public void delete(long id) {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_BUYER_QUERY);
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
@@ -111,7 +110,6 @@ public class BuyerDatabaseDao implements BuyerDao {
     /*@Override
     public void deleteAll() {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ALL_BUYERS_QUERY);
             preparedStatement.execute();
             preparedStatement.close();
@@ -125,7 +123,6 @@ public class BuyerDatabaseDao implements BuyerDao {
     public Collection getAll() {
         List<Buyer> result = new LinkedList<>();
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_BUYERS_QUERY);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

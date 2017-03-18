@@ -33,10 +33,15 @@ public class OrdersDatabaseDao implements OrdersDao {
     private static final String SQL_DELETE_ORDERS_BY_REGISTRATION_DATE = "DELETE FROM orders WHERE date_registration < ?";
     private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    Connection connection;
+
+    public OrdersDatabaseDao() {
+        this.connection = ConnectionHCP.getConnection();
+    }
+
     @Override
     public void add(Orders orders) {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_ORDERS_QUERY);
             preparedStatement.setDate(1, Date.valueOf(LocalDate.now().format(dateTimeFormatter)));
             preparedStatement.setDate(2, Date.valueOf(orders.getClosingDate()));
@@ -53,7 +58,6 @@ public class OrdersDatabaseDao implements OrdersDao {
     @Override
     public void update(Orders orders) {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDERS_QUERY);
             preparedStatement.setLong(5, orders.getId());
             preparedStatement.setDate(1, Date.valueOf(orders.getRegistrationDate()));
@@ -71,7 +75,6 @@ public class OrdersDatabaseDao implements OrdersDao {
     public Orders getById(long id) {
         Orders orders = null;
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BY_ID_ORDERS_QUERY);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -90,10 +93,10 @@ public class OrdersDatabaseDao implements OrdersDao {
 
     }
 
+
     /*@Override
     public void deleteAll() {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ALL_ORDERS_QUERY);
             preparedStatement.execute();
             preparedStatement.close();
@@ -106,7 +109,6 @@ public class OrdersDatabaseDao implements OrdersDao {
     public Collection getAll() {
         List<Orders> result = new LinkedList<>();
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_ORDERS_QUERY);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -126,7 +128,6 @@ public class OrdersDatabaseDao implements OrdersDao {
     public Collection getOrdersByBuyerId() {
         List<Orders> result = new ArrayList<>();
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ORDERS_BY_BUYER_ID);
             ResultSet resultSet = preparedStatement.executeQuery();
             LocalDate registrationDate = LocalDate.parse(resultSet.getString(3));
@@ -148,7 +149,6 @@ public class OrdersDatabaseDao implements OrdersDao {
     public Collection getOrdersByProductName() {
         List<Orders> result = new ArrayList<>();
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ORDERS_BY_PRODUCT_NAME);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -166,7 +166,6 @@ public class OrdersDatabaseDao implements OrdersDao {
     @Override
     public void deleteOrdersByRegistrationDate() {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ORDERS_BY_REGISTRATION_DATE);
             preparedStatement.execute();
             preparedStatement.close();

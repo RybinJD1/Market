@@ -3,7 +3,9 @@ package dao;
 
 import connectionDB.ConnectionHCP;
 import daoImpl.ProductDao;
+
 import entities.Product;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,10 +26,15 @@ public class ProductDatabaseDao implements ProductDao {
     private static final String SQL_DELETE_ALL_PRODUCTS_QUERY = "TRUNCATE TABLE products";
     private static final String SQL_SELECT_ALL_PRODUCT_QUERY = "SELECT * FROM products";
 
+    Connection connection ;
+
+    public ProductDatabaseDao() {
+        this.connection= ConnectionHCP.getConnection();
+    }
+
     @Override
     public void add(Product product) {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_PRODUCT_QUERY);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getDescription());
@@ -44,7 +51,6 @@ public class ProductDatabaseDao implements ProductDao {
     @Override
     public void update(Product product) {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PRODUCT_QUERY);
             preparedStatement.setLong(5, product.getId());
             preparedStatement.setString(1, product.getName());
@@ -62,7 +68,6 @@ public class ProductDatabaseDao implements ProductDao {
     public Product getById(long id) {
         Product result = null;
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BY_ID_PRODUCT_QUERY);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -79,7 +84,6 @@ public class ProductDatabaseDao implements ProductDao {
     @Override
     public void delete(long id) {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_PRODUCT_QUERY);
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
@@ -92,7 +96,6 @@ public class ProductDatabaseDao implements ProductDao {
     /*@Override
     public void deleteAll() {
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ALL_PRODUCTS_QUERY);
             preparedStatement.execute();
             preparedStatement.close();
@@ -105,7 +108,6 @@ public class ProductDatabaseDao implements ProductDao {
     public Collection getAll() {
         List<Product> result = new ArrayList<>();
         try {
-            Connection connection = ConnectionHCP.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_PRODUCT_QUERY);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet != null && resultSet.next()) {
