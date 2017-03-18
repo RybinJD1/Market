@@ -27,6 +27,9 @@ public class ConnectionHCP {
         dataSource = new HikariDataSource(config);
     }
 
+    public ConnectionHCP() {
+    }
+
     public static Connection getConnection() {
         try {
             return dataSource.getConnection();
