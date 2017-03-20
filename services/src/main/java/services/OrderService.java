@@ -1,6 +1,12 @@
 package services;
 
 import dao.OrdersDatabaseDao;
+import entities.Orders;
+import entities.Product;
+import enums.Status;
+
+import java.time.LocalDate;
+import java.util.HashMap;
 
 /**
  * Created by AlexFisher on 27.01.2017.
@@ -18,5 +24,12 @@ public final class OrderService {
             }
         }
         return instance;
+    }
+
+    public void createOrder(HashMap<Product, Integer> productMap, long buyerId) {
+        OrdersDatabaseDao orderDao = new OrdersDatabaseDao();
+        Orders orders = new Orders(buyerId, LocalDate.now(), Status.ORDER_PROCESSING);
+        orders.setQuantityOfProduct(productMap);
+        orderDao.insert(orders);
     }
 }

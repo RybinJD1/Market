@@ -3,6 +3,7 @@ package dao;
 import connectionDB.ConnectionHCP;
 import daoImpl.BuyerDao;
 import entities.Buyer;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.Collection;
@@ -10,6 +11,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BuyerDatabaseDao implements BuyerDao {
+
+    private static final Logger log = Logger.getLogger(BuyerDatabaseDao.class);
+
 
     private static final String SQL_FIND_BY_ID_BUYER_QUERY = "SELECT * FROM buyers WHERE id = ?";
     private static final String SQL_ADD_BUYER_QUERY = "INSERT INTO buyers(name, surname, email, password, phone, address)" +

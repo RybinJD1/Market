@@ -5,6 +5,7 @@ import daoImpl.OrdersDao;
 import entities.Orders;
 import entities.Product;
 import enums.Status;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -18,6 +19,9 @@ import java.util.List;
  * Created by AlexFisher on 16.01.2017.
  */
 public class OrdersDatabaseDao implements OrdersDao {
+
+    private static final Logger log = Logger.getLogger(OrdersDatabaseDao.class);
+
 
     private static final String SQL_FIND_BY_ID_ORDERS_QUERY = "SELECT * FROM orders WHERE id = ?";
     private static final String SQL_ADD_ORDERS_QUERY = "INSERT INTO orders(date_registration, status, buyers_id)" +

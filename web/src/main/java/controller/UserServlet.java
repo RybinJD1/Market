@@ -60,7 +60,6 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Buyer buyer = new Buyer();
-
         buyer.setName(req.getParameter("name"));
         buyer.setSurname(req.getParameter("surname"));
         buyer.setPassword(req.getParameter("password"));

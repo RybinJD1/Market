@@ -34,12 +34,15 @@
 <form>
 <c:forEach items="${products}" var="product">
     <c:if test="${product.remainder !=0 }">
+        <tr>
+            <td><a href="OrderController?action=insert"></a></td>
+        </tr>
         <%--<input type="hidden" readonly="readonly" name="id" value="${product.id}" />--%>
-        <input type="hidden" readonly="readonly" name="id" value="<c:out value="${product.id}"/> "/>
+        <%--<input type="hidden" readonly="readonly" name="id" value="<c:out value="${product.id}"/> "/>
         <input type="hidden" readonly="readonly" name="name" value="<c:out value="${product.name}"/> "/>
         <input type="hidden" readonly="readonly" name="description" value="<c:out value="${product.description}"/> "/>
         <input type="hidden" readonly="readonly" name="cost" value="<c:out value="${product.cost}"/> "/>
-        <input type="hidden" readonly="readonly" name="remainder" value="<c:out value="${product.remainder}"/> "/>
+        <input type="hidden" readonly="readonly" name="remainder" value="<c:out value="${product.remainder}"/> "/>--%>
     </c:if>
 </c:forEach>
 <%--<input type="submit" value="submit">--%>

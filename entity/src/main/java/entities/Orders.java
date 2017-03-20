@@ -19,11 +19,11 @@ public class Orders extends Entity{
     public Orders() {}
 
 
-    public Orders(LocalDate registrationDate, LocalDate closingDate, Status status, long buyerId) {
-        this.status = status;
+    public Orders(long buyerId, LocalDate registrationDate, LocalDate closingDate, Status status) {
+        this.buyerId = buyerId;
         this.registrationDate = registrationDate;
         this.closingDate = closingDate;
-        this.buyerId = buyerId;
+        this.status = status;
 
     }
 
@@ -36,7 +36,8 @@ public class Orders extends Entity{
         this.buyerId = buyerId;
     }
 
-    public Orders(LocalDate registrationDate, Status status) {
+    public Orders(long buyerId, LocalDate registrationDate, Status status) {
+        this.buyerId = buyerId;
         this.registrationDate = registrationDate;
         this.status = status;
     }
