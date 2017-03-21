@@ -1,7 +1,7 @@
 package dao;
 
 
-import connectionDB.ConnectionHCP;
+import connectionDB.ConnectionDB;
 import daoImpl.ProductDao;
 
 import entities.Product;
@@ -29,7 +29,7 @@ public class ProductDatabaseDao implements ProductDao {
     Connection connection;
 
     public ProductDatabaseDao() {
-        this.connection = ConnectionHCP.getConnection();
+        this.connection = ConnectionDB.getConnection();
     }
 
     @Override

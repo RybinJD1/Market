@@ -5,7 +5,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.log4j.Logger;
 
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -14,29 +13,31 @@ import java.util.Properties;
 /**
  * Class to get the connection object from the HikariPool
  */
-public class ConnectionHCP {
+public class ConnectionDB {
 
-    private static final Logger log = Logger.getLogger(ConnectionHCP.class);
-    public static final String PATH_TO_PROPERTIES = "src/main/java/resources/config.properties";
+    private static final Logger log = Logger.getLogger(ConnectionDB.class);
+//    static final String PATH_TO_PROPERTIES = "src.main.resources.config.properties";
     private static HikariDataSource dataSource;
     private static HikariConfig config = new HikariConfig();
     private static Properties properties = new Properties();
-    private static FileInputStream fileInputStream;
+
 
 
 
     static {
-        log.info("Creation HikariPool: ");
+/*        log.info("Creation HikariPool: ");
+        * not inputStream
         try {
-            fileInputStream = new FileInputStream(PATH_TO_PROPERTIES);
+            FileInputStream fileInputStream = new FileInputStream(PATH_TO_PROPERTIES);
             properties.load(fileInputStream);
         } catch (java.io.IOException e) {
             log.error("Ошибка в программе: файл " + PATH_TO_PROPERTIES + " не обнаружен");
-        }
-        config.setDriverClassName(properties.getProperty("Driver"));
-        config.setJdbcUrl(properties.getProperty("DataURL"));
-        config.setUsername(properties.getProperty("user"));
-        config.setPassword(properties.getProperty("password"));
+        }*/
+
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/mydb?useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+        config.setUsername("root");
+        config.setPassword("root");
         config.setMaximumPoolSize(30);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
@@ -44,7 +45,7 @@ public class ConnectionHCP {
         dataSource = new HikariDataSource(config);
     }
 
-    public ConnectionHCP() {
+    public ConnectionDB() {
     }
 
     /**

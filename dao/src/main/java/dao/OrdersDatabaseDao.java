@@ -1,6 +1,6 @@
 package dao;
 
-import connectionDB.ConnectionHCP;
+import connectionDB.ConnectionDB;
 import daoImpl.OrdersDao;
 import entities.Orders;
 import entities.Product;
@@ -45,11 +45,12 @@ public class OrdersDatabaseDao implements OrdersDao {
     Connection connection;
 
     public OrdersDatabaseDao() {
-        this.connection = ConnectionHCP.getConnection();
+        this.connection = ConnectionDB.getConnection();
     }
 
     @Override
     public void insert(Orders orders) {
+        log.info("insert order:");
         try {
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_ORDERS_QUERY);
@@ -77,8 +78,10 @@ public class OrdersDatabaseDao implements OrdersDao {
             preparedStatement.close();
         }catch (SQLException e) {
             try {
+                log.warn("SQLException in insert()" + e);
                 connection.rollback();
             } catch (SQLException e1) {
+                log.warn("SQLException in insert()" + e);
                 e1.printStackTrace();
             }
             e.printStackTrace();

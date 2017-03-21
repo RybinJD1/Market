@@ -1,11 +1,14 @@
 package dao;
 
-import connectionDB.ConnectionHCP;
+import connectionDB.ConnectionDB;
 import daoImpl.BuyerDao;
 import entities.Buyer;
 import org.apache.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,11 +29,12 @@ public class BuyerDatabaseDao implements BuyerDao {
     Connection connection;
 
     public BuyerDatabaseDao() {
-        this.connection = ConnectionHCP.getConnection();
+        this.connection = ConnectionDB.getConnection();
     }
 
     @Override
     public void insert(Buyer buyer) {
+        log.info("Insert buyer: ");
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_BUYER_QUERY);
             preparedStatement.setString(1, buyer.getName());
@@ -42,12 +46,14 @@ public class BuyerDatabaseDao implements BuyerDao {
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
+            log.warn("SQLException in insert()" + e);
             e.printStackTrace();
         }
     }
 
     @Override
     public void update(Buyer buyer) {
+        log.info("update buyer: ");
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_BUYER_QUERY);
             preparedStatement.setLong(7, buyer.getId());
@@ -60,12 +66,14 @@ public class BuyerDatabaseDao implements BuyerDao {
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
+            log.warn("SQLException in update()" + e);
             e.printStackTrace();
         }
     }
 
     @Override
     public Buyer getById(long id) {
+        log.info("getById buyer: ");
         Buyer result = null;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BY_ID_BUYER_QUERY);
@@ -76,6 +84,7 @@ public class BuyerDatabaseDao implements BuyerDao {
                         resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7));
             }
         } catch (SQLException e) {
+            log.warn("SQLException in getById()" + e);
             e.printStackTrace();
         }
         return result;
@@ -83,6 +92,7 @@ public class BuyerDatabaseDao implements BuyerDao {
 
     @Override
     public Buyer find(String email, String password) {
+        log.info("find buyer: ");
         String LOGIN_QUERY = "select * from buyers where email=" + "'" + email + "'" + " and password=" + "'" + password + "'";
         Buyer result = null;
         try {
@@ -93,6 +103,7 @@ public class BuyerDatabaseDao implements BuyerDao {
                         resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7));
             }
         } catch (SQLException e) {
+            log.warn("SQLException in find()" + e);
             e.printStackTrace();
         }
         return result;
@@ -100,18 +111,21 @@ public class BuyerDatabaseDao implements BuyerDao {
 
     @Override
     public void delete(long id) {
+        log.info("delete buyer: ");
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_BUYER_QUERY);
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException e) {
+            log.warn("SQLException in delete()" + e);
             e.printStackTrace();
         }
     }
 
     @Override
     public Collection getAll() {
+        log.info("Get all buyer : ");
         List<Buyer> result = new LinkedList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_BUYERS_QUERY);
@@ -124,6 +138,7 @@ public class BuyerDatabaseDao implements BuyerDao {
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException e) {
+            log.warn("SQLException in getAll()" + e);
             e.printStackTrace();
         }
         return result;
