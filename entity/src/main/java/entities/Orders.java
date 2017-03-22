@@ -49,13 +49,20 @@ public class Orders extends Entity{
 
         Orders orders = (Orders) o;
 
-        return buyerId == orders.buyerId;
+        if (getBuyerId() != orders.getBuyerId()) return false;
+        if (getStatus() != orders.getStatus()) return false;
+        if (!getRegistrationDate().equals(orders.getRegistrationDate())) return false;
+        return getClosingDate().equals(orders.getClosingDate());
 
     }
 
     @Override
     public int hashCode() {
-        return (int) (buyerId ^ (buyerId >>> 32));
+        int result = (int) (getBuyerId() ^ (getBuyerId() >>> 32));
+        result = 31 * result + getStatus().hashCode();
+        result = 31 * result + getRegistrationDate().hashCode();
+        result = 31 * result + getClosingDate().hashCode();
+        return result;
     }
 
     public void addProduct(Product product, int i) {
@@ -102,4 +109,6 @@ public class Orders extends Entity{
     public void setQuantityOfProduct(Map<Product, Integer> quantityOfProduct) {
         this.quantityOfProduct = quantityOfProduct;
     }
+
+
 }
