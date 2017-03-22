@@ -20,11 +20,11 @@
     <%--<br/>--%>
 <h2>Добро пожаловать, ${userName}</h2>
 
-<a href="/market/UserController?action=listUser">Users</a>
+<a href="UserController?action=listUser">Users</a>
 <br/>
-<a href="/market/ProductController?action=listProducts">Products</a>
+<a href="ProductController?action=listProducts">Products</a>
 <br/>
-<a href="/market/OrderController?action=listOrders">Orders</a>
+<a href="OrderController?action=listOrders">Orders</a>
 
 <br/><br/>
 <a href="LogoutServlet">Logout</a>

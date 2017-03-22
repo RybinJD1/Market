@@ -5,6 +5,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -16,29 +18,18 @@ import java.util.Properties;
 public class ConnectionDB {
 
     private static final Logger log = Logger.getLogger(ConnectionDB.class);
-//    static final String PATH_TO_PROPERTIES = "src.main.resources.config.properties";
     private static HikariDataSource dataSource;
     private static HikariConfig config = new HikariConfig();
-    private static Properties properties = new Properties();
-
-
-
+    private static Properties properties = ConnectionDB.getPropertiesFile();
 
     static {
-/*        log.info("Creation HikariPool: ");
-        * not inputStream
-        try {
-            FileInputStream fileInputStream = new FileInputStream(PATH_TO_PROPERTIES);
-            properties.load(fileInputStream);
-        } catch (java.io.IOException e) {
-            log.error("Ошибка в программе: файл " + PATH_TO_PROPERTIES + " не обнаружен");
-        }*/
+        log.info("Creation HikariPool: ");
 
-        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/mydb?useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
-        config.setUsername("root");
-        config.setPassword("root");
-        config.setMaximumPoolSize(30);
+        config.setDriverClassName(properties.getProperty("Driver"));
+        config.setJdbcUrl(properties.getProperty("DataURL"));
+        config.setUsername(properties.getProperty("user"));
+        config.setPassword(properties.getProperty("password"));
+        config.setMaximumPoolSize(15);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -46,6 +37,23 @@ public class ConnectionDB {
     }
 
     public ConnectionDB() {
+    }
+
+    /**
+     * Function to get the properties object
+     *
+     * @return Returns the properties object
+     */
+    private static Properties getPropertiesFile() {
+        Properties properties = new Properties();
+        InputStream inputStream = ConnectionDB.class.getClassLoader().getResourceAsStream("config.properties");
+        try {
+            properties.load(inputStream);
+        } catch (IOException e) {
+            log.error("Ошибка в программе: файл config.properties не обнаружен");
+            e.printStackTrace();
+        }
+        return properties;
     }
 
     /**
@@ -59,6 +67,7 @@ public class ConnectionDB {
             return dataSource.getConnection();
         } catch (SQLException e) {
             log.error("Connection error: " + e);
+            e.printStackTrace();
         }
         return null;
     }
