@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by AlexFisher on 16.01.2017.
+ * Class DAO for orders.
  */
 public class OrdersDatabaseDao implements OrdersDao {
 

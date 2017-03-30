@@ -31,7 +31,7 @@
     </c:forEach>
     </tbody>
 </table>
-<form>
+<form method="POST" action='OrderController' name="formAddOrder">
 <c:forEach items="${products}" var="product">
     <c:if test="${product.remainder !=0 }">
         <tr>

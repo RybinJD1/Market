@@ -15,7 +15,7 @@ public class TestJdbsBuyerDao {
     private static final String CREATE_BUYERS_TABLE_QUERY = "CREATE TABLE buyer(id int auto_increment, name varchar(60)" +
             " not null, surname varchar(60) not null, email varchar(60) unique not null, password varchar(60) not null," +
             " phone varchar(60) not null, address varchar(60) not null, primary key(id))";
-
+    private static final String SQL_DROP_TABLE_BUYER = "DROP TABLE buyer";
     private Connection connection;
     private BuyerDatabaseDao buyerDatabaseDao = new BuyerDatabaseDao();
 

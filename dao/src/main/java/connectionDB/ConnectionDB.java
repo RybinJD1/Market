@@ -25,10 +25,14 @@ public class ConnectionDB {
     static {
         log.info("Creation HikariPool: ");
 
-        config.setDriverClassName(properties.getProperty("Driver"));
+   /*   config.setDriverClassName(properties.getProperty("Driver"));
         config.setJdbcUrl(properties.getProperty("DataURL"));
         config.setUsername(properties.getProperty("user"));
-        config.setPassword(properties.getProperty("password"));
+        config.setPassword(properties.getProperty("password"));*/
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/mydb?useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+        config.setUsername("root");
+        config.setPassword("root");
         config.setMaximumPoolSize(15);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
@@ -50,7 +54,7 @@ public class ConnectionDB {
         try {
             properties.load(inputStream);
         } catch (IOException e) {
-            log.error("Ошибка в программе: файл config.properties не обнаружен");
+            log.error("Error: file config.properties not found");
             e.printStackTrace();
         }
         return properties;

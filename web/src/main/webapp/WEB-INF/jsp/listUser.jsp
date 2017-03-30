@@ -9,6 +9,7 @@
 <table border="1" cellspacing="0">
     <caption>Список пользователей</caption>
     <thead>
+    <th>role</th>
     <th>name</th>
     <th>surname</th>
     <th>email</th>
@@ -22,6 +23,7 @@
     <tbody>
     <c:forEach items="${buyers}" var="buyer">
         <tr>
+            <td><c:out value="${buyer.role}"/></td>
             <td><c:out value="${buyer.name}" /></td>
             <td><c:out value="${buyer.surname}" /></td>
             <td><c:out value="${buyer.email}" /></td>

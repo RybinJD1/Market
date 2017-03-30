@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
+/**
+ * Class DAO for products.
+ */
 public class ProductDatabaseDao implements ProductDao {
 
     private static final String SQL_ADD_PRODUCT_QUERY = "INSERT INTO products (name, description, cost, remainder)" +

@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by AlexFisher on 30.01.2017.
- */
+
 @WebServlet("/ProductController")
 public class ProductServlet extends HttpServlet{
 

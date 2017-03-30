@@ -1,0 +1,14 @@
+2017-03-22 13:33:30 INFO  ConnectionDB:26 - Creation HikariPool: 
+2017-03-22 13:33:31 INFO  ConnectionDB:66 - Getting Connection: 
+2017-03-22 13:33:33 INFO  BuyerDatabaseDao:95 - find buyer: 
+2017-03-22 13:33:34 INFO  ConnectionDB:66 - Getting Connection: 
+2017-03-22 13:33:34 INFO  BuyerDatabaseDao:128 - Get all buyer : 
+2017-03-22 13:33:38 INFO  ConnectionDB:66 - Getting Connection: 
+2017-03-22 13:33:41 INFO  ConnectionDB:66 - Getting Connection: 
+2017-03-27 15:44:11 INFO  ConnectionDB:26 - Creation HikariPool: 
+2017-03-28 20:11:32 INFO  ConnectionDB:26 - Creation HikariPool: 
+2017-03-28 21:51:38 INFO  ConnectionDB:26 - Creation HikariPool: 
+2017-03-29 10:30:25 INFO  ConnectionDB:26 - Creation HikariPool: 
+2017-03-29 10:47:44 INFO  ConnectionDB:26 - Creation HikariPool: 
+2017-03-29 12:43:07 INFO  ConnectionDB:26 - Creation HikariPool: 
+2017-03-29 12:45:06 INFO  ConnectionDB:26 - Creation HikariPool: 

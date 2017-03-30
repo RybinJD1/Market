@@ -3,6 +3,7 @@ package dao;
 import connectionDB.ConnectionDB;
 import daoImpl.BuyerDao;
 import entities.Buyer;
+import enums.RoleUser;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -13,15 +14,19 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Class DAO for buyers.
+ */
 public class BuyerDatabaseDao implements BuyerDao {
 
     private static final Logger log = Logger.getLogger(BuyerDatabaseDao.class);
 
 
     private static final String SQL_FIND_BY_ID_BUYER_QUERY = "SELECT * FROM buyers WHERE id = ?";
-    private static final String SQL_ADD_BUYER_QUERY = "INSERT INTO buyers(name, surname, email, password, phone, address)" +
-            "VALUES(?, ?, ?, ?, ?, ?)";
-    private static final String SQL_UPDATE_BUYER_QUERY = "UPDATE buyers SET name = ?, surname = ?, email = ?, password = ?, phone = ?, address = ? WHERE id = ?";
+    private static final String SQL_ADD_BUYER_QUERY = "INSERT INTO buyers(role, name, surname, email, password, phone, address)" +
+            "VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE_BUYER_QUERY = "UPDATE buyers SET role = ?, name = ?, surname = ?, email = ?," +
+            " password = ?, phone = ?, address = ? WHERE id = ?";
     private static final String SQL_DELETE_BUYER_QUERY = "DELETE FROM buyers WHERE id = ?";
     private static final String SQL_DELETE_ALL_BUYERS_QUERY = "TRUNCATE TABLE buyers";
     private static final String SQL_SELECT_ALL_BUYERS_QUERY = "SELECT * FROM buyers";
@@ -37,12 +42,13 @@ public class BuyerDatabaseDao implements BuyerDao {
         log.info("Insert buyer: ");
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_BUYER_QUERY);
-            preparedStatement.setString(1, buyer.getName());
-            preparedStatement.setString(2, buyer.getSurname());
-            preparedStatement.setString(3, buyer.getEmail());
-            preparedStatement.setString(4, buyer.getPassword());
-            preparedStatement.setString(5, buyer.getPhone());
-            preparedStatement.setString(6, buyer.getAddress());
+            preparedStatement.setString(1, buyer.getRole().toString().toUpperCase());
+            preparedStatement.setString(2, buyer.getName());
+            preparedStatement.setString(3, buyer.getSurname());
+            preparedStatement.setString(4, buyer.getEmail());
+            preparedStatement.setString(5, buyer.getPassword());
+            preparedStatement.setString(6, buyer.getPhone());
+            preparedStatement.setString(7, buyer.getAddress());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -56,13 +62,14 @@ public class BuyerDatabaseDao implements BuyerDao {
         log.info("update buyer: ");
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_BUYER_QUERY);
-            preparedStatement.setLong(7, buyer.getId());
-            preparedStatement.setString(1, buyer.getName());
-            preparedStatement.setString(2, buyer.getSurname());
-            preparedStatement.setString(3, buyer.getEmail());
-            preparedStatement.setString(4, buyer.getPassword());
-            preparedStatement.setString(5, buyer.getPhone());
-            preparedStatement.setString(6, buyer.getAddress());
+            preparedStatement.setLong(8, buyer.getId());
+            preparedStatement.setString(1, buyer.getRole().toString().toUpperCase());
+            preparedStatement.setString(2, buyer.getName());
+            preparedStatement.setString(3, buyer.getSurname());
+            preparedStatement.setString(4, buyer.getEmail());
+            preparedStatement.setString(5, buyer.getPassword());
+            preparedStatement.setString(6, buyer.getPhone());
+            preparedStatement.setString(7, buyer.getAddress());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -80,8 +87,9 @@ public class BuyerDatabaseDao implements BuyerDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet != null && resultSet.next()) {
-                result = new Buyer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                        resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7));
+                result = new Buyer(resultSet.getLong(1), RoleUser.valueOf(resultSet.getString("role").toUpperCase()),
+                        resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6),
+                        resultSet.getString(7), resultSet.getString(8));
             }
         } catch (SQLException e) {
             log.warn("SQLException in getById()" + e);
@@ -99,8 +107,9 @@ public class BuyerDatabaseDao implements BuyerDao {
             PreparedStatement ps = connection.prepareStatement(LOGIN_QUERY);
             ResultSet resultSet = ps.executeQuery();
             if (resultSet != null && resultSet.next()) {
-                result = new Buyer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                        resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7));
+                result = new Buyer(resultSet.getLong(1), RoleUser.valueOf(resultSet.getString("role").toUpperCase()),
+                        resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6),
+                        resultSet.getString(7), resultSet.getString(8));
             }
         } catch (SQLException e) {
             log.warn("SQLException in find()" + e);
@@ -131,8 +140,9 @@ public class BuyerDatabaseDao implements BuyerDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_BUYERS_QUERY);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Buyer buyer = new Buyer(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
-                        resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7));
+                Buyer buyer = new Buyer(resultSet.getLong(1), RoleUser.valueOf(resultSet.getString("role").toUpperCase()),
+                        resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6),
+                        resultSet.getString(7), resultSet.getString(8));
                 result.add(buyer);
             }
             preparedStatement.execute();

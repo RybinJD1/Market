@@ -4,7 +4,6 @@ package controller;
 import dao.BuyerDatabaseDao;
 import entities.Buyer;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,8 +42,9 @@ public class LoginServlet extends HttpServlet {
             Buyer buyer = buyerDatabaseDao.find(username, password);
             if (buyer != null) {
                 req.getSession().setAttribute("userName", buyer.getEmail());
-                RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/home.jsp");
-                requestDispatcher.forward(req, resp);
+                req.getSession().setAttribute("userId", buyer.getId());
+                req.getSession().setAttribute("userRole", buyer.getRole());
+                req.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(req, resp);
                 return;
             } else {
                 messages.put("login", "Unknown login, please try again");
@@ -52,8 +52,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         req.setAttribute("messages", messages);
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/home.jsp");
-        requestDispatcher.forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(req, resp);
     }
 
     @Override

@@ -7,6 +7,10 @@
 <body>
 <form method="POST" action='UserController' name="formAddUser">
     <input type="hidden" name="id" value="<c:out value="${buyer.id}" />" /> <br />
+    <label for="role">Role :</label>
+    <select name="role" required id="role">
+    <option value="USER">USER</option>
+    <option value="ADMIN">ADMIN</option></select> <br />
     First Name : <input type="text" name="name" value="<c:out value="${buyer.name}" />" /> <br />
     Last Name : <input type="text" name="surname" value="<c:out value="${buyer.surname}" />" /> <br />
     Email : <input type="text" name="email" value="<c:out value="${buyer.email}" />" /> <br />

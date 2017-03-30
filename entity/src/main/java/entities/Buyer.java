@@ -14,6 +14,7 @@ public class Buyer extends Entity {
     private String password;
     private String phone;
     private String address;
+    //fullName
 
     public Buyer(){}
 

@@ -2,6 +2,7 @@ package controller;
 
 import dao.BuyerDatabaseDao;
 import entities.Buyer;
+import enums.RoleUser;
 import services.BuyerService;
 
 import javax.servlet.RequestDispatcher;
@@ -12,9 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by AlexFisher on 27.01.2017.
- */
+
 @WebServlet("/UserController")
 public class UserServlet extends HttpServlet {
 
@@ -44,6 +43,7 @@ public class UserServlet extends HttpServlet {
             long userId = Long.parseLong(req.getParameter("id"));
             Buyer buyer = buyerDatabaseDao.getById(userId);
             req.setAttribute("buyer", buyer);
+//            req.setAttribute("roles", getRole());
         } else if (action.equalsIgnoreCase("listUser")){
             forward = LIST_USERS;
             req.setAttribute("buyers", buyerDatabaseDao.getAll());
@@ -51,6 +51,7 @@ public class UserServlet extends HttpServlet {
             forward = HOME;
         }else {
             forward = INSERT_OR_EDIT;
+//            req.setAttribute("roles", getRole());
         }
 
         RequestDispatcher view = getServletContext().getRequestDispatcher(forward);
@@ -60,6 +61,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Buyer buyer = new Buyer();
+        buyer.setRole(RoleUser.valueOf(req.getParameter("role")));
         buyer.setName(req.getParameter("name"));
         buyer.setSurname(req.getParameter("surname"));
         buyer.setPassword(req.getParameter("password"));
@@ -67,6 +69,7 @@ public class UserServlet extends HttpServlet {
         buyer.setPhone(req.getParameter("phone"));
         buyer.setAddress(req.getParameter("address"));
         String id = req.getParameter("id");
+
         if(id == null || id.isEmpty() ) {
             buyerDatabaseDao.insert(buyer);
         }
@@ -79,4 +82,8 @@ public class UserServlet extends HttpServlet {
         req.setAttribute("buyers", buyerDatabaseDao.getAll());
         view.forward(req, resp);
     }
+
+    /*private List<RoleUser> getRole(){
+        return new ArrayList<>(EnumSet.allOf(RoleUser.class));
+    }*/
 }

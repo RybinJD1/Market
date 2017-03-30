@@ -14,7 +14,8 @@ public class Orders extends Entity{
     private Status status;
     private LocalDate registrationDate;
     private LocalDate closingDate;
-    private Map<Product, Integer> quantityOfProduct = new HashMap<>();
+    private Map<Product, Integer> quantityOfProduct = new HashMap<>();//лист продуктов ,а у продуктов поле количество заказаных продуктов
+    //отношение один ко многому
 
     public Orders() {}
 
